@@ -121,7 +121,7 @@ WHERE rk = 1;
 ```
 
 -- 6. Which item was purchased first by the customer after they became a member?
-```
+```sql
 WITH cte AS (
   SELECT s.customer_id, s.product_id, order_date,
          ROW_NUMBER() OVER(PARTITION BY customer_id ORDER BY order_date) AS rk
