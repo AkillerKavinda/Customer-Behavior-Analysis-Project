@@ -1,0 +1,4 @@
+customer_id,order_date,product_id,product_name
+A,2021-01-01,1,sushi
+A,2021-01-01,2,curry
+B,2021-01-04,1,sushi

@@ -1,0 +1,16 @@
+customer_id,order_date,product_name,price,member,ranking
+A,2021-01-01,sushi,10,n,NULL
+A,2021-01-01,curry,15,n,NULL
+A,2021-01-07,curry,15,y,1
+A,2021-01-10,ramen,12,y,2
+A,2021-01-11,ramen,12,y,3
+A,2021-01-11,ramen,12,y,3
+B,2021-01-01,curry,15,n,NULL
+B,2021-01-02,curry,15,n,NULL
+B,2021-01-04,sushi,10,n,NULL
+B,2021-01-11,sushi,10,y,1
+B,2021-01-16,ramen,12,y,2
+B,2021-02-01,ramen,12,y,3
+C,2021-01-01,ramen,12,n,NULL
+C,2021-01-01,ramen,12,n,NULL
+C,2021-01-07,ramen,12,n,NULL
