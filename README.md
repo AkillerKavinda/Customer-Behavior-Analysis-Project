@@ -64,16 +64,14 @@ GROUP BY s.customer_id;
 ```
 
 -- 2. How many days has each customer visited the restaurant?
-
-```
+```sql
 SELECT customer_id, COUNT(DISTINCT order_date) AS days_visited
 FROM sales
 GROUP BY customer_id;
 ```
 
 -- 3. What was the first item from the menu purchased by each customer?
-
-```
+```sql
 WITH firstItem AS (
   SELECT *, RANK() OVER(PARTITION BY customer_id ORDER BY order_date) AS rn
   FROM sales s
@@ -85,8 +83,7 @@ WHERE rn = 1;
 ```
 
 -- 4. What is the most purchased item on the menu and how many times was it purchased by all customers?
-
-```
+```sql
 WITH bestitem AS (
   SELECT product_id, COUNT(product_id) AS count
   FROM sales
@@ -101,7 +98,7 @@ WHERE product_id IN (SELECT product_id FROM bestitem);
 ```
 
 -- Alternative version:
-```
+```sql
 SELECT m.product_name, COUNT(*) AS count
 FROM sales s
 LEFT JOIN menu m USING(product_id)
@@ -111,8 +108,7 @@ LIMIT 1;
 ```
 
 -- 5. Which item was the most popular for each customer?
-
-```
+```sql
 WITH customer_popularity AS (
   SELECT s.customer_id, m.product_name, COUNT(*) AS purchase_count,
          DENSE_RANK() OVER(PARTITION BY s.customer_id ORDER BY COUNT(*) DESC) AS rk
@@ -125,7 +121,6 @@ WHERE rk = 1;
 ```
 
 -- 6. Which item was purchased first by the customer after they became a member?
-
 ```
 WITH cte AS (
   SELECT s.customer_id, s.product_id, order_date,
@@ -142,8 +137,7 @@ WHERE rk = 1;
 ```
 
 -- 7. Which item was purchased just before the customer became a member?
-
-```
+```sql
 WITH cte AS (
   SELECT s.customer_id, s.product_id, order_date,
          DENSE_RANK() OVER(PARTITION BY customer_id ORDER BY order_date DESC) AS rk
@@ -159,8 +153,7 @@ WHERE rk = 1;
 ```
 
 -- 8. What is the total items and amount spent for each member before they became a member?
-
-```
+```sql
 SELECT s.customer_id,
        COUNT(s.product_id) AS num_of_products_bought,
        SUM(m.price) AS total_price_spent
@@ -173,8 +166,7 @@ GROUP BY customer_id;
 ```
 
 -- 9. If each $1 spent equates to 10 points and sushi has a 2x points multiplier, how many points would each customer have?
-
-```
+```sql
 SELECT s.customer_id,
        SUM(CASE
              WHEN m.product_name = 'sushi' THEN price * 20
@@ -187,8 +179,7 @@ GROUP BY s.customer_id;
 
 -- 10. In the first week after a customer joins the program (including their join date) they earn 2x points on all items.
 -- How many points do customer A and B have at the end of January?
-
-```
+```sql
 SELECT m.customer_id,
        SUM(CASE
              WHEN s.order_date >= m.join_date AND s.order_date <= DATE_ADD(m.join_date, INTERVAL 7 DAY) THEN mn.price * 20
@@ -203,8 +194,7 @@ GROUP BY m.customer_id;
 ```
 
 -- 11. Create a table with customer_id, order_date, product_name, member (y/n) to show membership status at time of purchase.
-
-```
+```sql
 SELECT s.customer_id, s.order_date, m.product_name, m.price,
        CASE
          WHEN s.customer_id IN (SELECT customer_id FROM members) AND s.order_date >= mn.join_date THEN 'y'
@@ -218,8 +208,7 @@ ORDER BY s.customer_id, s.order_date;
 
 -- 12. Danny requires further information about the ranking of products.
 -- He does not need the ranking of non-member purchases, so expects NULL ranking values for customers who are not yet part of the loyalty program.
-
-```
+```sql
 WITH cte AS (
   SELECT s.customer_id, s.order_date, m.product_name, m.price,
          CASE
