@@ -1,5 +1,7 @@
 # Danny's Diner Loyalty Program Analysis
 
+> **Note:** This project was built while following a YouTube tutorial to practice and learn SQL and data analysis concepts. The goal was to understand the concepts and apply them. Any modifications or experiments I made are my own.
+
 ## Introduction
 
 Danny is a passionate fan of Japanese cuisine. In December 2021, he opened a restaurant serving his three favorite dishes: sushi, curry, and ramen.
